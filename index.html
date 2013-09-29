@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="drag.css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+</head>
+<body>
+<aside draggable="true" id="dragme">
+    This is an aside, drag me.
+</aside>
+<div id="header">Toolbar
+</div>
+<div id="slider_width"></div>
+<div id="slider_height"></div>
+<div id="gui" style="width:800px; height:420px; background-color:#00ff00;">HERE</div>
+<script src="drag.js"></script>
+
+  <script>
+  $(function() {
+    $( "#slider_width" ).slider({
+      value:480,
+      min: 480,
+      max: 1200,
+      step: 20,
+      slide: function( event, ui ) {
+    	$( "#gui" ).width(  $( "#slider_width" ).slider( "value" ) );
+      }
+    });
+    $( "#gui" ).width(  $( "#slider_width" ).slider( "value" ) );
+  });
+  </script>
+</body>
+
+  <script>
+  $(function() {
+    $( "#slider_height" ).slider({
+      value:480,
+      min: 480,
+      max: 1200,
+      step: 20,
+      slide: function( event, ui ) {
+    	$( "#gui" ).height(  $( "#slider_height" ).slider( "value" ) );
+      }
+    });
+    $( "#gui" ).height(  $( "#slider_height" ).slider( "value" ) );
+  });
+  </script>
+</body>
+</html>
