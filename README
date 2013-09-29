@@ -1,0 +1,12 @@
+= Navit HTML5
+
+URL https://github.com/pgrandin/navit-gui-editor.git
+
+== Target
+
+Create a Web interface 
+== TODO
+
+- Generate XML from HTML5 Web interface
+- Manage "magnetic" on objects
+- Manage overlapping
