@@ -8,20 +8,21 @@
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 </head>
 <body>
-<aside draggable="true" id="dragme">
-    This is an aside, drag me.
-</aside>
+
+<div id="items"> </div>
 <div id="header">Toolbar
+<div id="buttons">
+    <button class="button">Click</button>
+    </div>
 </div>
 <div id="slider_width"></div>
 <div id="slider_height"></div>
-<div id="gui" style="width:800px; height:420px; background-color:#00ff00;">HERE</div>
-<script src="drag.js"></script>
+<div id="gui" style="background-image: url(navit-background-800x480.png); width:800px; height:420px; background-color:#00ff00;"  tabindex="0"></div>
 
   <script>
   $(function() {
     $( "#slider_width" ).slider({
-      value:480,
+      value:800,
       min: 480,
       max: 1200,
       step: 20,
@@ -32,7 +33,6 @@
     $( "#gui" ).width(  $( "#slider_width" ).slider( "value" ) );
   });
   </script>
-</body>
 
   <script>
   $(function() {
@@ -47,6 +47,58 @@
     });
     $( "#gui" ).height(  $( "#slider_height" ).slider( "value" ) );
   });
+
+        $(document).ready(function() {
+	$("#buttons").on("click", ".button", function () {
+
+		var group=$(document.createElement('aside'));
+		group.attr({id: 'dragme'});
+		group.attr({tabindex: '0'});
+		group.attr({draggable: "true"});
+		group.addClass('.item');
+		group.html("Random data");
+		group.draggable({
+			stop: function(event, ui) {	
+				var offset   = $("#gui").position();
+				var position = $(this).position();
+				$(this).css("left", 
+					Math.max(offset.left,
+					Math.min(position.left, 800 - offset.left - $(this).width()) )
+				     + 'px');
+				$(this).css("top",  
+					Math.min( 480 + offset.top - $(this).height() ,
+					Math.max(offset.top,
+					position.top) )
+				   + 'px');
+				update_code( $(this) );
+			}
+		}); 
+		$('body').append(group); 
+	   group.on('keypress', function (e) {
+		alert('ok');
+                if (e.keyCode == 37) { $("*:focus").css("left", '-=1px'); }
+                if (e.keyCode == 38) { $('*:focus').css("top",  '-=1px'); }
+                if (e.keyCode == 39) { $('*:focus').css("left", '+=1px'); }
+                if (e.keyCode == 40) { $('*:focus').css("top",  '+=1px'); }
+		update_code( $("*:focus") );
+            });
+
+			
+        });
+
+	});
+
+	function update_code(item){
+		var offset   = $("#gui").position();
+		var position = item.position();
+		 $("#code").text('<osd enabled="yes" type="text" label="'
+		 	+$("*:focus").html()+'" x="'
+		 	+Math.round(position.left - offset.left)+'" y="'
+			+Math.round(position.top - offset.top)+'" />');
+		
+	}
+
   </script>
+  <div id="code">(output)</div>
 </body>
 </html>
